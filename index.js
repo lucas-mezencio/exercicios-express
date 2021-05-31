@@ -1,8 +1,12 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
 
 const saudacao = require('./saudacaoMid')
 
+app.use(bodyParser.text())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(saudacao('Lucas'))
 
 app.get('/clientes/relatorio', (req, res) => {
@@ -14,6 +18,7 @@ app.get('/clientes/:id', (req, res) => {
 })
 
 app.post('/corpo', (req, res) => {
+    /* 
     let corpo = ''
     req.on('data', parte => {
         corpo += parte
@@ -21,7 +26,10 @@ app.post('/corpo', (req, res) => {
 
     req.on('end', () => {
         res.send(corpo)
-    })
+    }) 
+    */
+
+    res.send(JSON.stringify(req.body))
 })
 
 app.get('/ola', (req, res, next) => {
